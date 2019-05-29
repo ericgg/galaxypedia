@@ -1,0 +1,27 @@
+{
+  "name": "galaxypedia",
+  "version": "1.0.0",
+  "description": "Uma API com dados planetários para a galaxia",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericgg/galaxypedia.git"
+  },
+  "keywords": [
+    "api",
+    "rest",
+    "mongo"
+  ],
+  "author": "Eric Grynberg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ericgg/galaxypedia/issues"
+  },
+  "homepage": "https://github.com/ericgg/galaxypedia#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
