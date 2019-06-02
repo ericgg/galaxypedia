@@ -1,3 +1,5 @@
+let got = require('got');
+
 // Controller
 
 const Planet = require('./models/Planet');
@@ -10,21 +12,29 @@ exports.create = (req, res) => {
 		});
 	};
 
-	const planet = new Planet({
-		nome: req.body.nome,
-		clima: req.body.clima,
-		terreno: req.body.terreno,
-		qtdfilme: req.body.qtdfilme
-	});
+	var resqtdFilme;
 
-    planet.save()
-    .then(data => {
-        res.send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Erro na criação de dado de Planeta."
-        });
-    });
+	got('https://swapi.co/api/planets/?search='+req.body.nome, { json: true })
+	.then(function(response) {
+  		resqtdFilme = response.body.results[0].films.length;
+
+		const planet = new Planet({
+			nome: req.body.nome,
+			clima: req.body.clima,
+			terreno: req.body.terreno,
+			qtdfilme: resqtdFilme
+		});
+
+	    planet.save()
+	    .then(data => {
+	        res.send(data);
+	    }).catch(err => {
+	        res.status(500).send({
+	            message: err.message || "Erro na criação de dado de Planeta."
+	        });
+	    });
+   	});
+	
 };
 
 //Listar planetas
