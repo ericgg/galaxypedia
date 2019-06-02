@@ -11,10 +11,10 @@ exports.create = (req, res) => {
 	};
 
 	const planet = new Planet({
-		nome = req.body.nome,
-		clima = req.body.clima,
-		terreno = req.body.terreno,
-		qtdfilme = req.body.qtdfilme
+		nome: req.body.nome,
+		clima: req.body.clima,
+		terreno: req.body.terreno,
+		qtdfilme: req.body.qtdfilme
 	});
 
     planet.save()
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
 //Buscar por nome
 exports.find = (req, res) => {
 	Planet.find({ nome: req.params.nome }, (err, planets) => {
-		let planetArr = [];
+		let planetsArr = [];
 		if (err){
 			return res.status(500).send({
 				message: err.message || "Erro na busca por planetas por nome."
@@ -58,45 +58,45 @@ exports.find = (req, res) => {
 }
 
 //Busca por ID
-exports.findOne = (req, res) => {
-    Planet.findById(req.params._id)
+exports.findById = (req, res) => {
+    Planet.findById(req.params.planetId)
     .then(planet => {
         if(!planet) {
             return res.status(404).send({
-                message: "Planeta com a id " + req.params._id + " não encontrado"
+                message: "Planeta com a id " + req.params.planetId + " não encontrado"
             });            
         }
         res.send(planet);
     }).catch(err => {
-        if(err.kind === 'Planet Id') {
+        if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "Planeta com a id " + req.params._id + " não encontrado"
+                message: "Planeta com a id " + req.params.planetId + " não encontrado"
             });                
         }
         return res.status(500).send({
-            message: "Erro ao adquirir informação de planeta com id " + req.params._id
+            message: "Erro ao adquirir informação de planeta com id " + req.params.planetId
         });
     });
 };
 
 //Remover planeta
 exports.delete = (req, res) => {
-    Planet.findByIdAndRemove(req.params._id)
+    Planet.findByIdAndRemove(req.params.planetId)
     .then(planet => {
         if(!planet) {
             return res.status(404).send({
-                message: "Planeta com a id " + req.params._id + " não encontrado"
+                message: "Planeta com a id " + req.params.planetId + " não encontrado"
             });
         }
         res.send({message: "Planeta deletado com sucesso"});
     }).catch(err => {
         if(err.kind === 'Planet Id' || err.name === 'NãoEncontrado') {
             return res.status(404).send({
-                message: "Planeta com a id " + req.params._id + " não encontrado"
+                message: "Planeta com a id " + req.params.planetId + " não encontrado"
             });                
         }
         return res.status(500).send({
-            message: "Não foi possível deletar planeta com id " + req.params._id
+            message: "Não foi possível deletar planeta com id " + req.params.planetId
         });
     });
 };
