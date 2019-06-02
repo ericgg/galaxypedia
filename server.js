@@ -10,7 +10,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // DB
-mongoose.connect('mongodb://localhost/dbgalaxy', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/dbgalaxy', {
+    useNewUrlParser: true
+	}).then(() => {
+    	console.log("Conectado no banco de dados");    
+	}).catch(err => {
+    	console.log('Erro ao conectar no banco de dados', err);
+    	process.exit();
+	});
+
 var db = mongoose.connection;
 
 
